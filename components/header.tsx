@@ -5,6 +5,11 @@ export async function Header() {
   const supabase = await createClient()
   const { data } = await supabase.auth.getClaims()
   const logged = Boolean(data?.claims?.sub)
+  let isAdmin = false
+  if (logged) {
+    const result = await supabase.rpc('is_admin')
+    isAdmin = Boolean(result.data)
+  }
 
   return (
     <header className="site-header">
@@ -15,6 +20,7 @@ export async function Header() {
           <Link href="/tiradas">Tiradas</Link>
           <Link href="/campos">Campos</Link>
           <Link href="/empresas">Empresas</Link>
+          {isAdmin && <Link href="/admin">Administración</Link>}
         </nav>
         <div className="nav-actions">
           <Link href={logged ? '/cuenta' : '/login'} className="button button-ghost">{logged ? 'Mi cuenta' : 'Entrar'}</Link>
