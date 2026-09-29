@@ -13,27 +13,33 @@ export default async function NuevaTiradaPage({ searchParams }: { searchParams: 
         <Link className="button button-ghost" href="/admin/tiradas">Cancelar</Link>
       </div>
 
-      {params.error && <div className="message">No se ha podido guardar. Revisa los campos obligatorios e inténtalo de nuevo.</div>}
+      {params.error && <div className="message">No se ha podido guardar. Revisa los campos e inténtalo de nuevo.</div>}
 
       <form action={createCompetition} className="panel admin-form">
         <div className="form-section">
           <h2>Datos principales</h2>
           <div className="form-grid-2">
-            <label className="span-2"><span className="label">Nombre de la tirada *</span><input className="input" name="title" required minLength={3} placeholder="Ej. Gran Tirada de Foso Universal" /></label>
+            <label className="span-2"><span className="label">Nombre de la tirada *</span><input className="input" name="title" required minLength={3} placeholder="Ej. Gran Tirada Tizón de Oro" /></label>
             <label><span className="label">Modalidad *</span><input className="input" name="discipline" required placeholder="Foso Universal, Compak Sporting..." /></label>
-            <label><span className="label">Campo / instalación</span><input className="input" name="venue_name" placeholder="Nombre del campo de tiro" /></label>
+            <label><span className="label">Campo / instalación</span><input className="input" name="venue_name" placeholder="Ej. El Cerro Burgos" /></label>
             <label><span className="label">Fecha *</span><input className="input" type="date" name="start_date" required /></label>
-            <label><span className="label">Fecha de fin</span><input className="input" type="date" name="end_date" /></label>
+            <label><span className="label">Teléfono de inscripción</span><input className="input" type="tel" name="registration_phone" placeholder="Ej. 600 123 123" /></label>
             <label><span className="label">Provincia</span><input className="input" name="province" placeholder="Burgos" /></label>
             <label><span className="label">Municipio</span><input className="input" name="municipality" /></label>
           </div>
         </div>
 
         <div className="form-section">
-          <h2>Enlaces</h2>
+          <h2>Cartel</h2>
+          <label className="poster-upload"><span className="label">Imagen del cartel</span><input className="input" type="file" name="poster" accept="image/jpeg,image/png,image/webp" /><small className="muted">JPG, PNG o WEBP. Máximo 5 MB. Se mostrará en portada y en el calendario.</small></label>
+        </div>
+
+        <div className="form-section">
+          <h2>Enlaces opcionales</h2>
+          <p className="muted form-help">Puedes dejarlos vacíos y añadirlos cuando estén disponibles.</p>
           <div className="form-grid-2">
             <label><span className="label">Información</span><input className="input" type="url" name="info_url" placeholder="https://..." /></label>
-            <label><span className="label">Inscripción</span><input className="input" type="url" name="registration_url" placeholder="https://..." /></label>
+            <label><span className="label">Inscripción online</span><input className="input" type="url" name="registration_url" placeholder="https://..." /></label>
             <label className="span-2"><span className="label">Resultados / resultados en directo</span><input className="input" type="url" name="results_url" placeholder="https://..." /></label>
           </div>
         </div>
