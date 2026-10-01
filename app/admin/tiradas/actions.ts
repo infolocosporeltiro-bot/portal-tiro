@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { isReasonableIsoDate } from '@/lib/date'
 
 function text(formData: FormData, key: string) {
   return String(formData.get(key) ?? '').trim()
@@ -47,7 +48,10 @@ export async function createCompetition(formData: FormData) {
   const discipline = text(formData, 'discipline')
   const startDate = text(formData, 'start_date')
   const status = text(formData, 'status') === 'published' ? 'published' : 'draft'
-  if (title.length < 3 || !discipline || !startDate) redirect('/admin/tiradas/nueva?error=required')
+
+  if (title.length < 3 || !discipline || !isReasonableIsoDate(startDate)) {
+    redirect('/admin/tiradas/nueva?error=required')
+  }
 
   const posterPath = await uploadPoster(supabase, formData)
   if (posterPath === 'INVALID_POSTER' || posterPath === 'UPLOAD_ERROR') redirect('/admin/tiradas/nueva?error=poster')
@@ -87,7 +91,10 @@ export async function updateCompetition(formData: FormData) {
   const discipline = text(formData, 'discipline')
   const startDate = text(formData, 'start_date')
   const status = text(formData, 'status') === 'published' ? 'published' : 'draft'
-  if (title.length < 3 || !discipline || !startDate) redirect(`/admin/tiradas/${id}?error=required`)
+
+  if (title.length < 3 || !discipline || !isReasonableIsoDate(startDate)) {
+    redirect(`/admin/tiradas/${id}?error=required`)
+  }
 
   const { data: existing } = await supabase.from('competitions').select('poster_path').eq('id', id).single()
   if (!existing) redirect('/admin/tiradas')
