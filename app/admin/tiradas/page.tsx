@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { formatSpanishDate } from '@/lib/date'
 
 export default async function AdminTiradasPage({ searchParams }: { searchParams: Promise<{ created?: string; updated?: string }> }) {
   const params = await searchParams
@@ -30,7 +31,7 @@ export default async function AdminTiradasPage({ searchParams }: { searchParams:
             </div>
             {data.map((x) => (
               <div className="admin-table-row admin-table-row-actions" key={x.id}>
-                <span>{new Intl.DateTimeFormat('es-ES').format(new Date(x.start_date + 'T12:00:00'))}</span>
+                <span>{formatSpanishDate(x.start_date,{day:'2-digit',month:'2-digit',year:'numeric'})}</span>
                 <span><b>{x.title}</b><small>{x.discipline}</small></span>
                 <span>{[x.venue_name, x.municipality, x.province].filter(Boolean).join(' · ') || '—'}</span>
                 <span><span className={`pill status-${x.status}`}>{x.status === 'published' ? 'Publicada' : 'Borrador'}</span></span>
