@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { formatSpanishDate } from '@/lib/date'
 
 export default async function Tiradas() {
   const s = await createClient()
@@ -26,7 +27,7 @@ export default async function Tiradas() {
                       </a>
                     ) : <div className="competition-poster-placeholder">Sin cartel</div>}
                     <div className="competition-card-body">
-                      <span className="date-badge">{new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(x.start_date + 'T12:00:00'))}</span>
+                      <span className="date-badge">{formatSpanishDate(x.start_date)}</span>
                       <h3>{x.title}</h3>
                       <p>{x.discipline}</p>
                       <p className="muted">{[x.venue_name, x.municipality, x.province].filter(Boolean).join(' · ')}</p>
