@@ -36,7 +36,7 @@ export default async function EditarTiradaPage({ params, searchParams }: { param
             <label className="span-2"><span className="label">Nombre de la tirada *</span><input className="input" name="title" required minLength={3} defaultValue={competition.title} /></label>
             <label><span className="label">Modalidad *</span><input className="input" name="discipline" required defaultValue={competition.discipline} /></label>
             <label><span className="label">Campo / instalación</span><input className="input" name="venue_name" defaultValue={competition.venue_name ?? ''} /></label>
-            <label><span className="label">Fecha *</span><input className="input" type="date" name="start_date" required defaultValue={competition.start_date} /></label>
+            <label><span className="label">Fecha *</span><input className="input" type="date" name="start_date" min="2000-01-01" max="2100-12-31" required defaultValue={competition.start_date} /></label>
             <label><span className="label">Teléfono de inscripción</span><input className="input" type="tel" name="registration_phone" defaultValue={competition.registration_phone ?? ''} /></label>
             <label><span className="label">Provincia</span><input className="input" name="province" defaultValue={competition.province ?? ''} /></label>
             <label><span className="label">Municipio</span><input className="input" name="municipality" defaultValue={competition.municipality ?? ''} /></label>
